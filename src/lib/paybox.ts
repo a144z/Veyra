@@ -1,6 +1,7 @@
 import type {Pack} from './catalog';
 import type {Collectible} from './pokemon';
 export type PaymentMode='demo'|'live';
+export class PaymentUncertainError extends Error {constructor(message:string){super(message);this.name='PaymentUncertainError'}}
 export interface Receipt {id:string;mode:PaymentMode;amount:number;transaction:string|null;settledAt:string;card?:Collectible}
 export interface Ledger {balance:number;day:string;spent:number;receipts:Receipt[]}
 export interface Requirement {scheme:string;network:string;asset:string;amount:string;payTo:string;maxTimeoutSeconds:number;extra?:Record<string,unknown>}
@@ -40,6 +41,8 @@ export function validateChallenge(challenge:Challenge,pack:Pack):Requirement {
 }
 export async function livePayment(pack:Pack,merchant:string,log:(s:string)=>void):Promise<Receipt> {
  if(!window.veyraPaybox)throw new Error('Live mode requires an authenticated PayBox host bridge. See docs/INTEGRATION.md.');
+ const pendingKey='veyra.pending-payment';
+ const pending=localStorage.getItem(pendingKey);if(pending)throw new PaymentUncertainError('A prior payment needs reconciliation. Do not pay again. Merchant request '+pending);
  const url=new URL(merchant);if(url.protocol!=='https:')throw new Error('Merchant URL must use HTTPS.');
  url.searchParams.set('pack',pack.id);
  log('[x402] Requesting merchant challenge');
@@ -53,12 +56,15 @@ export async function livePayment(pack:Pack,merchant:string,log:(s:string)=>void
  // The authenticated host calls PayBox pay_x402. No PayBox keys are shipped in this static app.
  const signed=await window.veyraPaybox.payX402({challenge,accepted});
  if(!signed.paymentSignature)throw new Error('Payment signature missing.');
+ localStorage.setItem(pendingKey,requestId);
  log('[x402] Retrying with PAYMENT-SIGNATURE');
- const paid=await fetch(url,{headers:{...headers,'PAYMENT-SIGNATURE':signed.paymentSignature},signal:AbortSignal.timeout(30000)});
- if(!paid.ok)throw new Error('Payment submitted; merchant delivery is unconfirmed. Do not pay again. Contact the merchant with request '+requestId);
- const body=await paid.json();
+ let paid:Response;
+ try{paid=await fetch(url,{headers:{...headers,'PAYMENT-SIGNATURE':signed.paymentSignature},signal:AbortSignal.timeout(30000)});}catch{throw new PaymentUncertainError('Payment submission outcome is unknown. Do not pay again. Contact the merchant with request '+requestId);}
+ if(!paid.ok)throw new PaymentUncertainError('Payment submitted; merchant delivery is unconfirmed. Do not pay again. Contact the merchant with request '+requestId);
+ let body;try{body=await paid.json();}catch{throw new PaymentUncertainError('Merchant returned an unreadable receipt. Do not pay again. Request '+requestId);}
  // Merchant must verify settlement and allocate real inventory. API metadata alone cannot do that.
- if(body.settled!==true||typeof body.transaction!=='string'||!/^0x[a-fA-F0-9]{64}$/.test(body.transaction)||!body.receiptId||!body.card?.id)throw new Error('Merchant settlement or card allocation is unverified. Do not pay again. Request '+requestId);
+ if(body.settled!==true||typeof body.transaction!=='string'||!/^0x[a-fA-F0-9]{64}$/.test(body.transaction)||!body.receiptId||!body.card?.id)throw new PaymentUncertainError('Merchant settlement or card allocation is unverified. Do not pay again. Request '+requestId);
+ localStorage.removeItem(pendingKey);
  log('[Blockchain] Merchant confirmed settlement');
  return {id:body.receiptId,mode:'live',amount:pack.price,transaction:body.transaction,settledAt:new Date().toISOString(),card:body.card};
 }

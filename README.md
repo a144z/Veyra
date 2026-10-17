@@ -16,7 +16,7 @@ npm run typecheck
 npm run build
 ```
 
-`out/` is the static website. Serve it with any static host. `npm start` does not serve an exported app; use `npx serve out` instead.
+`out/` is the static website. Serve it with any static host. `npm start` serves the exported app with `serve`.
 
 ## Product
 
