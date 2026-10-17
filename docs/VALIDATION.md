@@ -1,5 +1,7 @@
 # Validation record
 
+[← Documentation](README.md)
+
 - Node 24.19.0, Linux x64; plugin pnpm 11.11.0.
 - Official starter 1.0.2 tooling preserved and frozen-lockfile install passed.
 - Plugin double-build byte identity and MCP conformance passed; 4 tools discovered.
@@ -8,7 +10,7 @@
 - Live-payment tests verify no fake-success fallback and block repayment after an uncertain merchant response. This is a mocked contract test, not real settlement.
 - Next.js production static export and strict TypeScript checks passed.
 - Hosted PayBox tests, wallet approval, paid delivery, actual card inventory and custody remain integration steps for a configured live merchant.
-- 33-second Remotion film rendered successfully in GitHub Actions. Seven scene frames and desktop/mobile product renders inspected; clipped mobile ornament and film wordmark corrected.
+- 33-second Remotion film exported and inspected. Seven scene frames and desktop/mobile product renders inspected; clipped mobile ornament and film wordmark corrected.
 - H.264 1920×1080 at 30 fps; AAC 48 kHz stereo; 990 video frames. MP4 container duration 33.003 seconds from audio packet rounding.
 - Uploaded music / rendered audio aligned correlation 0.9979; sub-millisecond codec offset.
 - Browser interaction testing was unavailable locally; production build, rendered layouts, protocol tests and mocked payment behavior were verified.
@@ -19,4 +21,10 @@ Final local behavior suite: **15 tests passed**.
 
 Final film SHA-256: `64b9d0839acc2c155015ed8ee2f54d2c50f96ed1615df6fcea0d0c717e400f1b`.
 
-Film source/render: commit `77c0491`, GitHub Actions run `39054673188`.
+The released film is a retained build artifact. Its checksum identifies the exact verified export independently of commit-history changes.
+
+## Reproduce locally
+
+Run `npm run check` for the application. In `plugin/`, use pnpm 11.11.0 and run `pnpm install --frozen-lockfile` followed by `pnpm test`. Render the film with `npm run video:render` on a machine that supports Chrome and a localhost render server.
+
+No hosted build or render workflows are configured. The retained film predates the current vector identity refinement; rerendering uses the current shared logo components.

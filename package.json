@@ -14,7 +14,8 @@
     "agent:rip": "tsx agent/rip.ts",
     "plugin:build": "cd plugin && pnpm build && cp dist/plugin.mjs ../dist/plugin.mjs",
     "plugin:test": "cd plugin && pnpm test",
-    "video:sync": "node scripts/sync-video-css.mjs"
+    "video:sync": "node scripts/sync-video-css.mjs",
+    "check": "node scripts/check.mjs"
   },
   "dependencies": {
     "@paybox-sh/sdk": "2.2.0",

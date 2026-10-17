@@ -1,5 +1,7 @@
 # Integration contracts
 
+[← Documentation](README.md)
+
 ## Submit the PayBox plugin
 
 The primary hackathon deliverable is **`dist/plugin.mjs`** in the repository root. It is copied byte-for-byte from the official starter build in `plugin/dist/plugin.mjs`.
@@ -64,7 +66,23 @@ For an independently hosted live merchant, set `NEXT_PUBLIC_MERCHANT_URL` or ent
 The merchant must expose `PAYMENT-REQUIRED` in its CORS response and accept `PAYMENT-SIGNATURE` and `X-Request-Id`. The latter binds an idempotent payment attempt. The challenge must match exact Base USDC price, network, asset and resource URL. On success it must return:
 
 ```json
-{"settled":true,"transaction":"0x<64 hex chars>","receiptId":"merchant-receipt-id","card":{"id":"allocated-card-id","name":"Card name","hp":"120","rarity":"Rare Holo","set":"Verified merchant inventory","image":"https://merchant.example/card.png","price":null,"currency":"USD","source":"reference","priceDate":null}}
+{
+  "settled": true,
+  "transaction": "0x<64 hex chars>",
+  "receiptId": "merchant-receipt-id",
+  "card": {
+    "id": "allocated-card-id",
+    "name": "Card name",
+    "hp": "120",
+    "rarity": "Rare Holo",
+    "set": "Verified merchant inventory",
+    "image": "https://merchant.example/card.png",
+    "price": null,
+    "currency": "USD",
+    "source": "reference",
+    "priceDate": null
+  }
+}
 ```
 
 The merchant must verify payment, allocate real inventory exactly once, verify grade/custody independently, and provide redemption. This JSON is a delivery contract, not cryptographic proof. The demo does not ship a merchant, custody service, or browser PayBox OAuth flow.

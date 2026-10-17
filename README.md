@@ -1,52 +1,98 @@
-# Veyra
+<div align="center">
+  <img src="docs/assets/cover.svg" alt="Veyra — A little luck. A rare feeling." width="1200" />
 
-**A little luck. A rare feeling.** An agent-native Pokémon collecting experience for the PayBox hackathon.
+  <p><strong>An agent-native collecting experience for PayBox.</strong></p>
+  <p>Discover a pack, authorize within your limits, and keep the reveal in your personal archive.</p>
 
-Veyra is a static Next.js app with a complete, explicitly labeled simulation: pack selection → policy check → payment handshake → foil opening → card reveal → persistent collection. No real funds, ownership, grades, vault custody, or shipping are implied by demo results.
+  <p>
+    <a href="#quick-start">Quick start</a> ·
+    <a href="#paybox-plugin">PayBox plugin</a> ·
+    <a href="docs/README.md">Documentation</a> ·
+    <a href="docs/BRAND.md">Brand assets</a> ·
+    <a href="releases/veyra-film.mp4">Product film</a>
+  </p>
 
-## Run
+  <p><code>TypeScript</code> <code>Next.js</code> <code>PayBox MCP</code> <code>x402</code> <code>Remotion</code></p>
+</div>
 
-Node 24 recommended (required for the PayBox plugin).
+## Overview
+
+Veyra pairs a native PayBox plugin with a static React companion. The plugin exposes four focused tools for pack discovery, public card research, free demo reveals, and capped USDC payment proposals. The companion turns that workflow into a collecting desk with original foil packs, an animated opening, and a persistent archive.
+
+**Project status:** the demo is functional without credentials. Live payments require a configured x402 merchant and PayBox authorization. Public card metadata does not establish physical inventory, verified grade, custody, or ownership.
+
+### Highlights
+
+- **Three pack identities:** First light, Afterglow, and Fireline, priced at $2, $5, and $10 USDC in the demo catalog.
+- **Bounded agent behavior:** automatic demo authorization within a $10 daily allowance, or manual approval for each opening.
+- **Resilient discovery:** public Pokémon TCG metadata with timeouts, bundled reference images, and source-aware USD/EUR prices.
+- **A personal archive:** browser-local persistence, exportable collection data, and interactive slab previews.
+- **Native payment proposals:** unsigned Base or Solana USDC requests with fixed caps and explicit expiry.
+- **A shared visual language:** geometric SVG identity, CSS foil artwork, Framer Motion interactions, and a 33-second Remotion film.
+
+## Quick start
+
+Use Node.js 24 and npm. The PayBox plugin additionally requires pnpm **11.11.0**; its reference Node version is pinned in `plugin/.node-version`.
 
 ```sh
 npm ci
 npm run dev
-npm run test
-npm run typecheck
-npm run build
 ```
 
-`out/` is the static website. Serve it with any static host. `npm start` serves the exported app with `serve`.
+Open the local URL printed by Next.js. The demo starts with 25 simulated USDC. Open a pack in agent mode to run the authorization sequence automatically, or switch to manual mode to approve it yourself.
 
-## Product
+```sh
+npm run check
+```
 
-- Three original foil packs: First light ($2), Afterglow ($5), Fireline ($10).
-- Agent / manual modes, $10 daily demo allowance, $25 demo balance.
-- Cross-tab purchase locking where Web Locks is supported; repeat-click guard and receipt deduplication.
-- Public Pokémon TCG metadata with timeout and bundled offline card images.
-- Raw card market references preserve USD / EUR and source dates. Never presented as graded valuations.
-- Responsive interface, keyboard-accessible dialogs, reduced-motion support, archive export.
-- Real live-payment integration boundary and Node PayBox agent: see [integration guide](docs/INTEGRATION.md).
-- 33-second Remotion product film using the supplied audio and shared product components.
+This runs TypeScript checks, behavior tests, and a production build locally. The static export is written to `out/`; `npm start` serves that export. No hosted automation is required.
 
-## Honest integration status
+## PayBox plugin
 
-The official `@paybox-sh/sdk` is a **Node SDK**. `window.paybox.requestPayment(challenge)` from the initial specification is not a documented browser method. It is not used here. The static app cannot securely allocate physical inventory, enforce a server-side agent policy, prove grade, or ship an item. Those functions require an independently operated merchant and real PayBox authorization. There is no hidden fake-success fallback in live mode.
+The submission artifact is **[`dist/plugin.mjs`](dist/plugin.mjs)**. Upload that file alone to the PayBox developer portal.
 
-Pokémon, PSA, Courtyard and PayBox marks belong to their owners. This is an independent hackathon concept. The slab is an explicitly labeled grade visualization, not a certificate.
+| Tool | Purpose | Payment behavior |
+| --- | --- | --- |
+| `list_packs` | Browse the catalog and integration readiness | No payment |
+| `inspect_card` | Read public card metadata and raw-card price references | No payment |
+| `open_demo_pack` | Produce a reproducible reference-card reveal | Free simulation |
+| `propose_pack_purchase` | Build a capped x402 request to your configured merchant | Unsigned proposal; PayBox handles approval and execution |
 
-## Hackathon upload
+Build and verify with the pinned plugin toolchain:
 
-Upload **`dist/plugin.mjs`**. The primary deliverable is a native PayBox plugin, not the companion website. See [portal fields and setup](docs/INTEGRATION.md).
+```sh
+cd plugin
+pnpm install --frozen-lockfile
+pnpm test
+cd ..
+node scripts/publish-plugin.mjs
+```
+
+See the [submission guide](docs/SUBMISSION.md) for portal fields and the [integration guide](docs/INTEGRATION.md) for network hosts, configuration, and payment lifecycle details.
 
 ## Product film
 
+The completed [33-second film](releases/veyra-film.mp4) is included in the repository. It uses the supplied music, a fitted 96 BPM timing grid, measured bass accents, and shared product components.
+
 ```sh
-npm run audio:analyze # Python: numpy + scipy; FFmpeg required
 npm run video:studio
 npm run video:render
 ```
 
-The exact 33-second master lives at `public/soundtrack.m4a`. Film: 1920 × 1080, 30 fps, 990 frames. Analysis envelopes and the fitted 96 BPM beat grid are committed, so rendering does not need Python. GitHub Actions can render the film and visual QA frames on a machine that supports Chrome's local render server.
+Rendering runs locally on a machine that supports Chrome and a localhost render server. The committed analysis data makes Python optional for normal rendering. To regenerate it, install FFmpeg, NumPy, and SciPy, then run `npm run audio:analyze`.
 
-The rendered film is included at [releases/veyra-film.mp4](releases/veyra-film.mp4). Upload the root [dist/plugin.mjs](dist/plugin.mjs) file to PayBox; the video and source files are separate deliverables.
+## Documentation
+
+| Guide | Contents |
+| --- | --- |
+| [Architecture](docs/ARCHITECTURE.md) | Runtime boundaries, data flow, and source layout |
+| [Integration](docs/INTEGRATION.md) | Merchant contract, PayBox proposals, and browser adapter |
+| [Submission](docs/SUBMISSION.md) | Exact upload file, portal copy, and judging walkthrough |
+| [Brand](docs/BRAND.md) | Logo assets, geometry, color, typography, and usage |
+| [Validation](docs/VALIDATION.md) | Reproducible checks, verified behavior, and remaining integration work |
+| [Contributing](CONTRIBUTING.md) | Local development and review expectations |
+| [Changelog](CHANGELOG.md) | Notable project changes |
+
+## Attribution
+
+Veyra is an independent hackathon project. Pokémon, PSA, Courtyard, and PayBox names and marks belong to their respective owners. Slab artwork is a grade visualization; demo reveals grant no card, certificate, vault allocation, or shipping entitlement. Inter is distributed under the [SIL Open Font License](public/fonts/OFL.txt).
