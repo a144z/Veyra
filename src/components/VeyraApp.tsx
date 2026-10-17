@@ -18,6 +18,8 @@ export function VeyraApp(){
  useEffect(()=>{mounted.current=true;const saved=readSaved();setLedger(saved.ledger);setCollection(saved.collection);setReady(true);return()=>{mounted.current=false;if(timer.current)clearTimeout(timer.current)}},[]);
  useEffect(()=>{if(ready)try{localStorage.setItem(KEY,JSON.stringify({ledger,collection}));}catch{setToast('Browser storage is unavailable. Keep this tab open to preserve the session.')}},[ledger,collection,ready]);
  useEffect(()=>{if(!toast)return;const t=setTimeout(()=>setToast(''),5000);return()=>clearTimeout(t)},[toast]);
+ // Demo agents authorize automatically within the checked local policy; manual mode waits for the button.
+ useEffect(()=>{if(phase==='confirm'&&agent&&mode==='demo')void pay();},[phase,agent,mode]);
  function notify(s:string){setToast(s)}
  function choose(pack:Pack){if(busy.current)return;setSelected(pack)}
  function prepare(pack=selected){if(busy.current)return;if(uncertain){notify('A submitted payment has an unknown outcome. Check its merchant request before another purchase.');return;}setSelected(pack);setLogs([]);setError('');setReceipt(null);setPhase('confirm')}
