@@ -1,0 +1,6 @@
+{
+  "name":"veyra", "version":"1.0.0", "private":true,
+  "scripts":{"dev":"next dev","build":"next build","start":"next start","typecheck":"tsc --noEmit","test":"tsx --test tests/*.test.ts","video:studio":"remotion studio video/index.ts","video:render":"remotion render video/index.ts Veyra launch/veyra-film.mp4 --codec=h264 --crf=17 --concurrency=2","audio:analyze":"python3 scripts/analyze_audio.py","agent:rip":"tsx agent/rip.ts"},
+  "dependencies":{"next":"16.4.2","react":"19.2.4","react-dom":"19.2.4","framer-motion":"12.23.24","lucide-react":"0.468.0","@radix-ui/react-dialog":"^1.1.15","@radix-ui/react-slot":"^1.2.3","class-variance-authority":"^0.7.1","clsx":"^2.1.1","tailwind-merge":"^3.3.1","remotion":"4.0.536","@remotion/cli":"4.0.536","@remotion/media":"4.0.536","@paybox-sh/sdk":"latest"},
+  "devDependencies":{"typescript":"^5.9.3","@types/node":"^24.10.0","@types/react":"^19.2.2","@types/react-dom":"^19.2.2","tailwindcss":"^4.1.16","@tailwindcss/postcss":"^4.1.16","tsx":"^4.20.6"}
+}

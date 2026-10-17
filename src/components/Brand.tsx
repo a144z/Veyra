@@ -1,0 +1,2 @@
+export function Mark({size=30,color='currentColor'}:{size?:number;color?:string}){return <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M28 6C14 8 5 19 5 32s9 24 23 26V44c-6-2-10-6-10-12s4-10 10-12V6Z" fill={color}/><path d="M36 6c14 2 23 13 23 26s-9 24-23 26V44c6-2 10-6 10-12s-4-10-10-12V6Z" fill={color}/></svg>}
+export function Wordmark(){return <span className="wordmark"><Mark/>veyra<span className="brand-dot">®</span></span>}
