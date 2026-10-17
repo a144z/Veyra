@@ -22,7 +22,7 @@ Use the pinned `packageManager` with Corepack (or install pnpm 11.11.0). Do not 
 **Project name:** Veyra
 
 **Description (under 280 characters):**
-Veyra is an agent-native Pokémon collecting plugin. Browse packs, inspect card metadata, try free demo reveals, and propose capped USDC x402 purchases through PayBox. Clear budgets and honest receipts turn agent payments into a delightful collecting experience.
+Veyra brings Pokémon collecting to AI agents: discover packs, research cards, preview reveals, and request capped USDC purchases through PayBox’s x402 approval flow. A visual companion makes every reveal memorable while keeping demo and live activity explicit.
 
 **Built plugin file:** `dist/plugin.mjs` — upload this file alone, not a ZIP or TypeScript source.
 
@@ -42,6 +42,7 @@ Veyra is an agent-native Pokémon collecting plugin. Browse packs, inspect card 
 
 | Tool | Sample input | Result |
 |---|---|---|
+| `get_setup_status` | `{}` | Tool catalog, setup status, required hosts, optional unpaid merchant probe |
 | `list_packs` | `{}` | Prices, pack IDs and readiness |
 | `inspect_card` | `{"cardId":"base1-4"}` | Public card metadata, price source, currency, date |
 | `open_demo_pack` | `{"pack":"holo","seed":0}` | Reproducible free simulation, `paid:false`, `ownershipGranted:false` |
@@ -90,3 +91,9 @@ The merchant must verify payment, allocate real inventory exactly once, verify g
 ## Node SDK agent
 
 `agent/rip.ts` demonstrates the real documented `PayboxClient.useService` method for your own configured merchant. Use PayBox CLI login/connect and an authorized wallet. It prints the request snapshot; a pending result must be polled to terminal status, never treated as success. This tool is not run during builds/tests.
+
+## Setup diagnostics and empty tool lists
+
+Version 1.1.0 includes `get_setup_status` and an embedded SVG icon in MCP server metadata. Start with `{}`: it explains the configuration without touching the network. An optional unpaid merchant probe checks the selected pack's challenge without signing or paying.
+
+Use [Plugin setup and discovery](PLUGIN_SETUP.md) for exact portal settings and version checks. The current upload-bundle catalog is saved in [plugin-tools.json](plugin-tools.json); compare the five tool names there against **Test → Load tools** in the portal. An installed plugin may still be pinned to an older upload.

@@ -2,6 +2,19 @@
 
 Notable changes to Veyra are recorded here. The project is in active hackathon development; entries describe implemented behavior rather than promised integrations.
 
+## 1.1.0 — 2026-10-18
+
+### Added
+
+- Embedded MCP server icon and setup-status diagnostics, including optional unpaid merchant probing.
+- Exact upload-bundle tool discovery snapshots and Base/Solana proposal runtime tests.
+- Portal setup and empty-capability troubleshooting guides.
+
+### Fixed
+
+- Cursor arrow tip and click ripple now target the exact center of the selected button in the product film.
+- Refreshed the 33-second video locally with the current visual identity.
+
 ## Unreleased
 
 ### Changed

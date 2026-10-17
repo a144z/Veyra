@@ -69,3 +69,9 @@ icon = '<rect width="64" height="64" rx="16" fill="#111114"/>' + mark(VIOLET, 6,
 (ROOT / 'public/icon.svg').write_text(svg(64, 64, icon, 'Veyra', 'Veyra application icon.'))
 (ROOT / 'src/lib/brand.ts').write_text('/** Geometric master shared by the browser and Remotion. See public/brand for SVG exports. */\nexport const SEAL_HALF = "' + HALF + '";\n')
 print('Built vector marks, outlined wordmarks, repository cover, identity board, and favicon.')
+
+# Embed the same icon directly in the self-contained hosted MCP bundle.
+import base64
+encoded_icon = base64.b64encode((ROOT / 'public/icon.svg').read_bytes()).decode()
+identity_source = f'export const PLUGIN_ICON = "data:image/svg+xml;base64,{encoded_icon}";\n'
+(ROOT / 'plugin/src/identity.ts').write_text(identity_source)

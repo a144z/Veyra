@@ -21,6 +21,7 @@ The geometry is deliberate: a 26-unit outer radius, an 11-unit counter, mirrored
 | [Paper mark](../public/brand/mark-paper.svg) | Reversed applications on dark backgrounds |
 | [Wordmark](../public/brand/wordmark.svg) | Horizontal signature on dark backgrounds |
 | [Ink wordmark](../public/brand/wordmark-ink.svg) | Horizontal signature on light backgrounds |
+| [Application icon](../public/brand/app-icon.png) | Square icon preview at 512 × 512 |
 | [Transparent PNG](../public/brand/mark.png) | Raster applications at 512 × 512 |
 | [Repository cover](assets/cover.svg) | README and project introduction |
 | [Raster cover](assets/cover.png) | Presentations and other raster contexts |

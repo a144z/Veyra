@@ -6,11 +6,11 @@
 
 **What does your project do?**
 
-Veyra is an agent-native Pokémon collecting plugin. Browse packs, inspect card metadata, try free demo reveals, and propose capped USDC x402 purchases through PayBox. Clear budgets and honest receipts turn agent payments into a delightful collecting experience.
+Veyra brings Pokémon collecting to AI agents: discover packs, research cards, preview reveals, and request capped USDC purchases through PayBox’s x402 approval flow. A visual companion makes every reveal memorable while keeping demo and live activity explicit.
 
-**Upload:** `dist/plugin.mjs` (399,223 bytes; 4 tools; official starter 1.0.2).
+**Upload:** `dist/plugin.mjs` (404,330 bytes; 5 tools; version 1.1.0; official starter 1.0.2).
 
-**SHA-256:** `fa1b4d22e02b56da84c0a32e234425dd27cd3a77f3dbde6741d4c0af182829ce`
+**SHA-256:** `777321a203504f9098069bc726f30c0e19fe973e57c814b0bd408fbe89470cfd`
 
 ## One-minute judging walkthrough
 
@@ -26,3 +26,7 @@ Veyra is an agent-native Pokémon collecting plugin. Browse packs, inspect card 
 Network hostname `api.pokemontcg.io` enables live metadata. No secrets needed for demo tools. The real merchant's exact hostname plus non-sensitive `VEYRA_MERCHANT_URL` are required only for live proposals. Configure an optional Pokémon API key as a host-scoped `X-Api-Key` brokered header, not a source-code value.
 
 Upload alone does not submit the project. Run hosted checks, test tools, review the hackathon terms, and choose Submit Project in the portal. Local tests do not prove hosted execution, payment settlement, inventory, grade, or custody.
+
+## If the app shows no capabilities
+
+Follow [Plugin setup and discovery](PLUGIN_SETUP.md). Compare the uploaded bundle against [the generated tool catalog](plugin-tools.json), then reload tools and verify the installed version.

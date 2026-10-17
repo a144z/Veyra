@@ -1,0 +1,582 @@
+{
+  "version": "1.1.0",
+  "protocolVersion": "2026-07-28",
+  "artifact": "dist/plugin.mjs",
+  "bytes": 404330,
+  "sha256": "777321a203504f9098069bc726f30c0e19fe973e57c814b0bd408fbe89470cfd",
+  "toolCount": 5,
+  "discoveryRequiresNetwork": false,
+  "discoveryRequiresVariables": false,
+  "tools": [
+    {
+      "name": "list_packs",
+      "title": "Discover Veyra packs",
+      "description": "Browse three pack tiers, exact USDC prices and integration readiness. No payment or network request.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "demo",
+              "merchant-configured"
+            ]
+          },
+          "packs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": [
+                    "base",
+                    "holo",
+                    "chase"
+                  ]
+                },
+                "name": {
+                  "type": "string"
+                },
+                "priceUsdc": {
+                  "type": "string"
+                },
+                "maxAmount": {
+                  "type": "string"
+                },
+                "focus": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "priceUsdc",
+                "maxAmount",
+                "focus"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "brand",
+          "mode",
+          "packs",
+          "notice"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "inspect_card",
+      "title": "Inspect a Pokémon card",
+      "description": "Look up public Pokémon TCG metadata and raw-card price references. Offline references are labeled. Never a graded valuation or proof of ownership.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "cardId": {
+            "default": "base1-4",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]{1,24}-[a-zA-Z0-9]{1,12}$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "card": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "rarity": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "rarity",
+              "image"
+            ],
+            "additionalProperties": false
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "pokemon-tcg-api",
+              "offline-reference"
+            ]
+          },
+          "price": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "USD",
+                  "EUR"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "priceDate": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "card",
+          "source",
+          "price",
+          "currency",
+          "priceDate",
+          "notice"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "open_demo_pack",
+      "title": "Open a Veyra demo pack",
+      "description": "Free reproducible pack opening simulation. A seed selects a public reference card. No wallet, payment, real asset, daily policy enforcement, or persistent collection. Use propose_pack_purchase for a real payment proposal.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "pack": {
+            "default": "holo",
+            "type": "string",
+            "enum": [
+              "base",
+              "holo",
+              "chase"
+            ]
+          },
+          "seed": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "const": "demo"
+          },
+          "pack": {
+            "type": "string",
+            "enum": [
+              "base",
+              "holo",
+              "chase"
+            ]
+          },
+          "simulatedPriceUsdc": {
+            "type": "string"
+          },
+          "card": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "rarity": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "rarity",
+              "image"
+            ],
+            "additionalProperties": false
+          },
+          "paid": {
+            "type": "boolean",
+            "const": false
+          },
+          "ownershipGranted": {
+            "type": "boolean",
+            "const": false
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mode",
+          "pack",
+          "simulatedPriceUsdc",
+          "card",
+          "paid",
+          "ownershipGranted",
+          "notice"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "propose_pack_purchase",
+      "title": "Propose a Veyra x402 pack purchase",
+      "description": "Build an unsigned capped USDC x402 request to the configured real merchant. PayBox selects the wallet and handles policies, approval, payment and paid response. A proposal is not a payment. Poll the returned PayBox request ID; never rerun to poll. Inspect payment and delivery separately before retrying.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "pack": {
+            "type": "string",
+            "enum": [
+              "base",
+              "holo",
+              "chase"
+            ]
+          },
+          "chain": {
+            "default": "eip155:8453",
+            "type": "string",
+            "enum": [
+              "eip155:8453",
+              "solana:mainnet"
+            ]
+          }
+        },
+        "required": [
+          "pack"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "io.paybox/transactionProposal": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string",
+                "const": "1"
+              },
+              "expiresAt": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "x402"
+              },
+              "chain": {
+                "type": "string",
+                "enum": [
+                  "eip155:8453",
+                  "solana:mainnet"
+                ]
+              },
+              "request": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "format": "uri"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "GET",
+                      "POST"
+                    ]
+                  },
+                  "body": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                },
+                "required": [
+                  "url",
+                  "method"
+                ],
+                "additionalProperties": false
+              },
+              "payment": {
+                "type": "object",
+                "properties": {
+                  "asset": {
+                    "type": "string"
+                  },
+                  "maxAmount": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]{0,19}$"
+                  }
+                },
+                "required": [
+                  "asset",
+                  "maxAmount"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "version",
+              "expiresAt",
+              "kind",
+              "chain",
+              "request",
+              "payment"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "io.paybox/transactionProposal"
+        ],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/__schema0"
+                }
+              },
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "$ref": "#/$defs/__schema0"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "get_setup_status",
+      "title": "Check Veyra setup",
+      "description": "Show all five Veyra tools, demo readiness, required hosts and merchant configuration. Works with zero variables or network hosts. Set probeMerchant=true only to send one unpaid GET to your configured merchant; this never pays and cannot verify inventory or fulfillment.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "probeMerchant": {
+            "default": false,
+            "type": "boolean"
+          },
+          "pack": {
+            "default": "holo",
+            "type": "string",
+            "enum": [
+              "base",
+              "holo",
+              "chase"
+            ]
+          },
+          "chain": {
+            "default": "eip155:8453",
+            "type": "string",
+            "enum": [
+              "eip155:8453",
+              "solana:mainnet"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "outputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "demoReady": {
+            "type": "boolean",
+            "const": true
+          },
+          "merchantConfigured": {
+            "type": "boolean"
+          },
+          "merchantHost": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "merchantStatus": {
+            "type": "string",
+            "enum": [
+              "not-configured",
+              "invalid-configuration",
+              "not-checked",
+              "challenge-valid",
+              "challenge-mismatch",
+              "request-failed"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "requiredNetworkHosts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requiredVariables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secretsRequired": {
+            "type": "boolean",
+            "const": false
+          },
+          "hostedPermissionsVerified": {
+            "type": "boolean",
+            "const": false
+          },
+          "paymentExecuted": {
+            "type": "boolean",
+            "const": false
+          },
+          "nextSteps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "version",
+          "tools",
+          "demoReady",
+          "merchantConfigured",
+          "merchantHost",
+          "merchantStatus",
+          "message",
+          "requiredNetworkHosts",
+          "requiredVariables",
+          "secretsRequired",
+          "hostedPermissionsVerified",
+          "paymentExecuted",
+          "nextSteps"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

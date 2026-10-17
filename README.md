@@ -17,7 +17,7 @@
 
 ## Overview
 
-Veyra pairs a native PayBox plugin with a static React companion. The plugin exposes four focused tools for pack discovery, public card research, free demo reveals, and capped USDC payment proposals. The companion turns that workflow into a collecting desk with original foil packs, an animated opening, and a persistent archive.
+Veyra pairs a native PayBox plugin with a static React companion. The plugin exposes five focused tools for pack discovery, public card research, free demo reveals, and capped USDC payment proposals. The companion turns that workflow into a collecting desk with original foil packs, an animated opening, and a persistent archive.
 
 **Project status:** the demo is functional without credentials. Live payments require a configured x402 merchant and PayBox authorization. Public card metadata does not establish physical inventory, verified grade, custody, or ownership.
 
@@ -53,6 +53,7 @@ The submission artifact is **[`dist/plugin.mjs`](dist/plugin.mjs)**. Upload that
 
 | Tool | Purpose | Payment behavior |
 | --- | --- | --- |
+| `get_setup_status` | Explain setup and optionally probe an unpaid merchant challenge | No payment |
 | `list_packs` | Browse the catalog and integration readiness | No payment |
 | `inspect_card` | Read public card metadata and raw-card price references | No payment |
 | `open_demo_pack` | Produce a reproducible reference-card reveal | Free simulation |
@@ -86,6 +87,7 @@ Rendering runs locally on a machine that supports Chrome and a localhost render 
 | Guide | Contents |
 | --- | --- |
 | [Architecture](docs/ARCHITECTURE.md) | Runtime boundaries, data flow, and source layout |
+| [Plugin setup](docs/PLUGIN_SETUP.md) | Required settings, discovery, and real-purchase readiness |
 | [Integration](docs/INTEGRATION.md) | Merchant contract, PayBox proposals, and browser adapter |
 | [Submission](docs/SUBMISSION.md) | Exact upload file, portal copy, and judging walkthrough |
 | [Brand](docs/BRAND.md) | Logo assets, geometry, color, typography, and usage |

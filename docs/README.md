@@ -7,6 +7,7 @@ Veyra has three independently runnable parts: the static collecting app, the nat
 | Guide | Read this when you want to… |
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Understand the runtime boundaries and data flow |
+| [Plugin setup](PLUGIN_SETUP.md) | Portal settings, empty-list troubleshooting, and real-purchase readiness |
 | [Integration](INTEGRATION.md) | Configure a real merchant or an authenticated payment host |
 | [Submission](SUBMISSION.md) | Upload and test the PayBox plugin |
 | [Brand](BRAND.md) | Use the identity or rebuild the vector exports |
