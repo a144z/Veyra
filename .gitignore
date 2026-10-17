@@ -6,3 +6,5 @@ launch/
 !.env.example
 *.tsbuildinfo
 .DS_Store
+
+*.log
