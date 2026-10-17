@@ -8,6 +8,15 @@
 - Live-payment tests verify no fake-success fallback and block repayment after an uncertain merchant response. This is a mocked contract test, not real settlement.
 - Next.js production static export and strict TypeScript checks passed.
 - Hosted PayBox tests, wallet approval, paid delivery, actual card inventory and custody remain integration steps for a configured live merchant.
-- 33-second Remotion film rendering and visual QA run in GitHub Actions because the local environment blocks Remotion's localhost server.
+- 33-second Remotion film rendered successfully in GitHub Actions. Seven scene frames and desktop/mobile product renders inspected; clipped mobile ornament and film wordmark corrected.
+- H.264 1920×1080 at 30 fps; AAC 48 kHz stereo; 990 video frames. MP4 container duration 33.003 seconds from audio packet rounding.
+- Uploaded music / rendered audio aligned correlation 0.9979; sub-millisecond codec offset.
+- Browser interaction testing was unavailable locally; production build, rendered layouts, protocol tests and mocked payment behavior were verified.
 
 The submission artifact is byte-identical to `plugin/dist/plugin.mjs`; its SHA-256 is recorded in SUBMISSION.md.
+
+Final local behavior suite: **15 tests passed**.
+
+Final film SHA-256: `64b9d0839acc2c155015ed8ee2f54d2c50f96ed1615df6fcea0d0c717e400f1b`.
+
+Film source/render: commit `77c0491`, GitHub Actions run `39054673188`.

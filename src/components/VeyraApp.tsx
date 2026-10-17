@@ -1,7 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import {AnimatePresence,motion} from 'framer-motion';
-import {ArrowUpRight,ArrowRight,Check,ChevronRight,Wallet,Settings2,ShieldCheck,Box,Terminal,Copy,Download,RotateCcw,ExternalLink,Loader2,Sparkles,Plus,Minus} from 'lucide-react';
+import {ArrowUpRight,ArrowRight,Check,Wallet,Settings2,ShieldCheck,Box,Terminal,Download,RotateCcw,ExternalLink,Loader2,Sparkles} from 'lucide-react';
 import {Wordmark,Mark} from './Brand';import {PackArt} from './PackArt';import {CardRevealSlab} from './CardRevealSlab';import {PackAnimation} from './PackAnimation';
 import {Button} from './ui/button';import {Badge,Card} from './ui/primitives';import {Dialog} from './ui/dialog';
 import {PACKS,type Pack} from '@/lib/catalog';import {fetchRandomRareCard,type Collectible} from '@/lib/pokemon';

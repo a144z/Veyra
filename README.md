@@ -6,7 +6,7 @@ Veyra is a static Next.js app with a complete, explicitly labeled simulation: pa
 
 ## Run
 
-Node 22+ recommended.
+Node 24 recommended (required for the PayBox plugin).
 
 ```sh
 npm ci
@@ -48,3 +48,5 @@ npm run video:render
 ```
 
 The exact 33-second master lives at `public/soundtrack.m4a`. Film: 1920 × 1080, 30 fps, 990 frames. Analysis envelopes and the fitted 96 BPM beat grid are committed, so rendering does not need Python. GitHub Actions can render the film and visual QA frames on a machine that supports Chrome's local render server.
+
+The rendered film is included at [releases/veyra-film.mp4](releases/veyra-film.mp4). Upload the root [dist/plugin.mjs](dist/plugin.mjs) file to PayBox; the video and source files are separate deliverables.
